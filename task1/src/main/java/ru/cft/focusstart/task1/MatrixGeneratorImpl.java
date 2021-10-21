@@ -1,15 +1,16 @@
 package ru.cft.focusstart.task1;
 
-public class DataHolder {
+public class MatrixGeneratorImpl implements MatrixGenerator {
 
-    private int[][] data;
+    private final int size;
 
-    public DataHolder(int dimensionality) {
-        data = new int[dimensionality + 1][dimensionality + 1];
-        fillingTheArray();
+    public MatrixGeneratorImpl(int size) {
+        this.size = size;
     }
 
-    public void fillingTheArray() {
+    public int[][] generateMatrix() {
+        int[][] data = new int[size + 1][size + 1];
+
         for (int i = 0; i < data.length; i++) {
             for (int j = 0; j < data.length; j++) {
                 if (i == 0 || j == 0) {
@@ -19,9 +20,11 @@ public class DataHolder {
                 }
             }
         }
+
+        return data;
     }
 
-    public int[][] getData() {
-        return data;
+    public int getSize() {
+        return size;
     }
 }
