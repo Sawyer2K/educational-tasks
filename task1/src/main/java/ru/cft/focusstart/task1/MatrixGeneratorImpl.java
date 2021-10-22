@@ -8,23 +8,16 @@ public class MatrixGeneratorImpl implements MatrixGenerator {
         this.size = size;
     }
 
+    /*Метод генерирует и возвращает восходящую матрицу заданного рамера.*/
     public int[][] generateMatrix() {
-        int[][] data = new int[size + 1][size + 1];
+        var data = new int[size][size];
 
         for (int i = 0; i < data.length; i++) {
             for (int j = 0; j < data.length; j++) {
-                if (i == 0 || j == 0) {
-                    data[i][j] = i + j;
-                } else {
-                    data[i][j] = i * j;
-                }
+                data[i][j] = (i + 1) * (j + 1);
             }
         }
 
         return data;
-    }
-
-    public int getSize() {
-        return size;
     }
 }
