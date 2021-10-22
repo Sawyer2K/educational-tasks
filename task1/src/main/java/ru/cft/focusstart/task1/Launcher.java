@@ -8,43 +8,49 @@ public class Launcher {
         run();
     }
 
-    public static void run() {
-        MatrixGenerator matrixGeneratorImpl;
+    private static void run() {
+        MatrixGenerator matrixGenerator;
         Drawer drawer;
 
         System.out.println("Введите размерность таблицы умножения. Допустимы размерности от 1 до 32 включительно.\n" +
                 "Ввод 0 приведёт к закрытию программы");
 
-        int input = processUserInput();
+        var input = processUserInput();
 
         if (input == 0) {
             System.out.println("Программа завершена корректно");
             System.exit(0);
         }
 
-        matrixGeneratorImpl = new MatrixGeneratorImpl(input);
+        matrixGenerator = new MatrixGeneratorImpl(input);
         drawer = new Drawer();
 
-        drawer.outputTheTable(matrixGeneratorImpl);
+        System.out.println(drawer.outputTheTable(matrixGenerator));
     }
 
-    public static int processUserInput() {
-        Scanner scanner = new Scanner(System.in);
+    /*Метод создает объект сканнера внутри себя.
+    Внутри метода производится проверка валидности введённых данных - является ли строка числовым значением или нет.
+    Так же проверяется соответствие введённого значения допустимому диапазону.
+    В обоих случаях выводится информационное сообщение, работа программы не останавливется - пользователю предлагается
+    повторный ввод.*/
+    private static int processUserInput() {
+        var scanner = new Scanner(System.in);
 
         while (true) {
-            String input = scanner.next();
+            var input = scanner.next();
 
-            if (input.matches("\\d+")) {
-                int result = Integer.parseInt(input);
+            try {
+                var result = Integer.parseInt(input);
 
-                if (result <= 32) {
+                if (result >= 0 & result <= 32) {
                     return result;
                 } else {
                     System.out.println("Введённое число должно быть в промежутке от 0 до 32 включительно.\n" +
                             "Повторите ввод.");
                 }
-            } else {
-                System.out.println("Входные данные некорректны. Повторите ввод.");
+            } catch (NumberFormatException e) {
+                System.out.println("Входные данные некорректны. Введите число в промежутке от 0 до 32 включительно.\n" +
+                        "Повторите ввод.");
             }
         }
     }
