@@ -1,6 +1,7 @@
 package ru.cft.focusstart.task1;
 
 import java.io.PrintWriter;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Launcher {
@@ -27,16 +28,14 @@ public class Launcher {
         Matrix matrix = new MultiplicationMatrix(input);
         Drawer drawer = new Drawer();
 
-        try (PrintWriter pw = new PrintWriter(System.out)) {
-            pw.println(drawer.getAsText(matrix));
-        }
+        PrintWriter pw = new PrintWriter(System.out);
+        pw.println(drawer.getAsText(matrix));
     }
 
     private static int processUserInput() {
         do {
             try {
-                var input = SCANNER.next();
-                var result = Integer.parseInt(input);
+                var result = SCANNER.nextInt();
 
                 if (result >= 0 && result <= MAX_VALUE) {
                     return result;
@@ -44,9 +43,9 @@ public class Launcher {
 
                 System.out.printf("Введённое число должно быть в промежутке от 0 до %d включительно. Повторите ввод.%s",
                         MAX_VALUE, System.lineSeparator());
-            } catch (NumberFormatException e) {
-                System.out.printf("Входные данные некорректны. Введите число в промежутке от 0 до %d включительно. Повторите ввод.%s",
-                        MAX_VALUE, System.lineSeparator());
+            } catch (InputMismatchException e) {
+                System.out.printf("Некорретный ввод: %s. Введите целое число в промежутке от 0 до %d включительно.%s",
+                        SCANNER.nextLine(), MAX_VALUE, System.lineSeparator());
             }
         } while (SCANNER.hasNext());
 
