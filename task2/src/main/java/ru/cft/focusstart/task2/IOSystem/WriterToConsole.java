@@ -2,7 +2,7 @@ package ru.cft.focusstart.task2.IOSystem;
 
 public class WriterToConsole implements IWriter {
 
-    String outputData;
+    private final String outputData;
 
     public WriterToConsole(String outputData) {
         this.outputData = outputData;

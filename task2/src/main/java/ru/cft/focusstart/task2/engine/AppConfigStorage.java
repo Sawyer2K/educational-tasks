@@ -1,6 +1,6 @@
 package ru.cft.focusstart.task2.engine;
 
-public class ApplicationConfigStorage {
+public class AppConfigStorage {
 
     private static String pathToInputFile;
     private static String pathToOutputFile;

@@ -5,8 +5,8 @@ import java.io.PrintWriter;
 
 public class WriterToFile implements IWriter {
 
-    String pathToOutputFile;
-    String outputData;
+    private final String pathToOutputFile;
+    private final String outputData;
 
     public WriterToFile(String pathToOutputFile, String outputData) {
         this.pathToOutputFile = pathToOutputFile;
@@ -14,11 +14,11 @@ public class WriterToFile implements IWriter {
     }
 
     @Override
-    public void writeData() throws FileNotFoundException {
+    public void writeData() {
         try (PrintWriter writer = new PrintWriter(pathToOutputFile)) {
             writer.write(outputData);
         } catch (FileNotFoundException e) {
-            throw e;
+            e.printStackTrace();
         }
     }
 }

@@ -6,7 +6,8 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class ReaderFromFile implements IReader {
-    final String pathToInputFile;
+
+    private final String pathToInputFile;
 
     public ReaderFromFile(String pathToInputFile) {
         this.pathToInputFile = pathToInputFile;
@@ -21,6 +22,7 @@ public class ReaderFromFile implements IReader {
                 inputData.add(scanner.next());
             }
         } catch (FileNotFoundException e) {
+            System.out.println("Ошибка! Не найден входной файл");
             throw e;
         }
 

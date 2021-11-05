@@ -69,16 +69,4 @@ public class Triangle extends Shape {
                 dF.format(sideC),
                 dF.format(angleC));
     }
-
-    @Override
-    public String toString() {
-        return "Triangle{" +
-                "sideA=" + sideA +
-                ", sideB=" + sideB +
-                ", sideC=" + sideC +
-                ", angleA=" + angleA +
-                ", angleB=" + angleB +
-                ", angleC=" + angleC +
-                "} " + super.toString();
-    }
 }

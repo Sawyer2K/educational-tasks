@@ -4,25 +4,13 @@ public class Rectangle extends Shape {
 
     private final double length;
     private final double width;
-    protected double diagonal;
+    private double diagonal;
 
     public Rectangle(String type, double length, double width) {
         super(type);
         this.length = Math.max(length, width);
         this.width = Math.min(length, width);
         calculateParameters();
-    }
-
-    public double getLength() {
-        return length;
-    }
-
-    public double getWidth() {
-        return width;
-    }
-
-    public double getDiagonal() {
-        return diagonal;
     }
 
     @Override
@@ -41,14 +29,5 @@ public class Rectangle extends Shape {
                         """, dF.format(diagonal),
                 dF.format(length),
                 dF.format(width));
-    }
-
-    @Override
-    public String toString() {
-        return "Rectangle{" +
-                "length=" + length +
-                ", width=" + width +
-                ", diagonal=" + diagonal +
-                "} " + super.toString();
     }
 }

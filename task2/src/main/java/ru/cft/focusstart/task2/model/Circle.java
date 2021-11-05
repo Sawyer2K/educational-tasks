@@ -12,14 +12,6 @@ public class Circle extends Shape {
         calculateParameters();
     }
 
-    public double getRadius() {
-        return radius;
-    }
-
-    public double getDiameter() {
-        return diameter;
-    }
-
     @Override
     public void calculateParameters() {
         perimeter = 2 * Math.PI * radius;
@@ -32,13 +24,5 @@ public class Circle extends Shape {
                 Радиус: %s мм
                 Диаметр: %s мм
                 """, dF.format(radius), dF.format(diameter));
-    }
-
-    @Override
-    public String toString() {
-        return "Circle{" +
-                "radius=" + radius +
-                ", diameter=" + diameter +
-                "} " + super.toString();
     }
 }

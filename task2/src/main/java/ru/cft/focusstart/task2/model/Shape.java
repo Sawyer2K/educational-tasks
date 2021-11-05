@@ -4,18 +4,14 @@ import java.text.DecimalFormat;
 
 public abstract class Shape {
 
-    private final String type;
+    private final String name;
     protected double perimeter;
     protected double area;
 
     DecimalFormat dF = new DecimalFormat("#.##");
 
-    Shape(String type) {
-        this.type = type;
-    }
-
-    public String getType() {
-        return type;
+    Shape(String name) {
+        this.name = name;
     }
 
     public double getPerimeter() {
@@ -33,18 +29,8 @@ public abstract class Shape {
                         Тип фигуры: %s
                         Площадь: %s кв. мм
                         Периметр: %s мм
-                        """, type,
+                        """, name,
                 dF.format(getArea()),
                 dF.format(getPerimeter()));
-    }
-
-    //переименовать в другой метод, не использовать toString
-    @Override
-    public String toString() {
-        return "Shape{" +
-                "type='" + type + '\'' +
-                ", perimeter=" + perimeter +
-                ", area=" + area +
-                '}';
     }
 }
