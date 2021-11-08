@@ -1,5 +1,7 @@
 package ru.cft.focusstart.task2.modelsFactory;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import ru.cft.focusstart.task2.model.Shape;
 import ru.cft.focusstart.task2.model.Triangle;
 
@@ -7,17 +9,21 @@ import java.util.List;
 
 public class TriangleFactory implements ShapeFactory {
 
+    private static final Logger log = LoggerFactory.getLogger(TriangleFactory.class.getName());
+
     @Override
     public Shape createShape(List<Double> paramsList) {
         if (paramsList.size() != 3) {
-            throw new IllegalArgumentException("Получен неверный лист параметров. Лист параметров для треугольника " +
-                    "должен содержать три значения - размеры сторон.");
+            log.error("Получен неверный список параметров. Лист параметров для треугольника должен содержать три значения - размеры сторон.");
+
+            throw new IllegalArgumentException();
         }
 
-        for (double param : paramsList) {
-            if (param < 1) {
-                throw new IllegalArgumentException("Ошибка! Один из полученных параметров невалиден. Параметры должны " +
-                        "быть ненулевыми положительными значениями");
+        for (var param : paramsList) {
+            if (param <= 0) {
+                log.error("Ошибка! Один из полученных параметров невалиден. Параметры должны быть ненулевыми положительными значениями");
+
+                throw new IllegalArgumentException();
             }
         }
 

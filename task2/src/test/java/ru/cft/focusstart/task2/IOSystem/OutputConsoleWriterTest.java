@@ -8,19 +8,18 @@ import java.io.PrintStream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class WriterToConsoleTest {
+public class OutputConsoleWriterTest {
 
     @Test
     @DisplayName("Тест проверяет корректность информации выведенной в консоль.")
     public void writeData() {
-        String expectedMessage = "This message";
-        ByteArrayOutputStream output = new ByteArrayOutputStream();
+        var output = new ByteArrayOutputStream();
         System.setOut(new PrintStream(output));
-        WriterToConsole writer = new WriterToConsole();
+        var writer = new OutputConsoleWriter();
         writer.writeData("This message");
 
-        String actualMessage = output.toString().trim();
-
+        var expectedMessage = "This message";
+        var actualMessage = output.toString().trim();
 
         assertEquals(expectedMessage, actualMessage,
                 "Информация, выведенная в консоль, не соответствует ожидаемой.");

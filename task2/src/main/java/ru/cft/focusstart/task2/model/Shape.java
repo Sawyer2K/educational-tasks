@@ -5,13 +5,17 @@ import java.text.DecimalFormat;
 public abstract class Shape {
 
     private final String name;
-    protected double perimeter;
-    protected double area;
+    double perimeter;
+    double area;
 
     DecimalFormat dF = new DecimalFormat("#.##");
 
     Shape(String name) {
         this.name = name;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public double getPerimeter() {
@@ -22,14 +26,13 @@ public abstract class Shape {
         return area;
     }
 
-    abstract void calculateParameters();
-
     public String getTextInfo() {
         return String.format("""
                         Тип фигуры: %s
                         Площадь: %s кв. мм
                         Периметр: %s мм
-                        """, name,
+                        """,
+                name,
                 dF.format(getArea()),
                 dF.format(getPerimeter()));
     }

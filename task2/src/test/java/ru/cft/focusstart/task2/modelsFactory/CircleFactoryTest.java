@@ -2,11 +2,9 @@ package ru.cft.focusstart.task2.modelsFactory;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import ru.cft.focusstart.task2.IOSystem.ReaderFromFile;
 import ru.cft.focusstart.task2.model.Circle;
 import ru.cft.focusstart.task2.model.Shape;
 
-import java.io.FileNotFoundException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,66 +14,64 @@ import static org.junit.jupiter.api.Assertions.*;
 public class CircleFactoryTest {
 
     @Test
-    @DisplayName("Test checks the correctness of creating a shape.")
+    @DisplayName("Тест проверяет корректность создания круга.")
     public void circleCorrectCreationTest() {
         List<Double> paramsList = new ArrayList<>();
         paramsList.add(5.0);
-        Circle circle = (Circle) new CircleFactory().createShape(paramsList);
+        var circle = (Circle) new CircleFactory().createShape(paramsList);
 
-        DecimalFormat dF = new DecimalFormat("#.##");
+        var dF = new DecimalFormat("#.##");
 
-        String expectedType = "Круг";
-        String expectedArea = "78,54";
-        String expectedPerimeter = "31,42";
-        String expectedRadius = "5";
-        String expectedDiameter = "10";
+        var expectedType = "Круг";
+        var expectedArea = "78,54";
+        var expectedPerimeter = "31,42";
+        var expectedRadius = "5";
+        var expectedDiameter = "10";
 
         assertAll(
                 () -> assertEquals(expectedType, circle.getName(),
-                        "The type was initialized incorrectly"),
+                        "Название фигуры было инициализированно неверно."),
                 () -> assertEquals(expectedArea, dF.format(circle.getArea()),
-                        "The area was calculated incorrectly"),
+                        "Площадь фигуры была инициализированна неверно."),
                 () -> assertEquals(expectedPerimeter, dF.format(circle.getPerimeter()),
-                        "The perimeter was calculated incorrectly"),
+                        "Периметр фигуры был инициализированн неверно."),
                 () -> assertEquals(expectedRadius, dF.format(circle.getRadius()),
-                        "The radius was initialized incorrectly"),
+                        "Радиус фигуры был инициализированн неверно."),
                 () -> assertEquals(expectedDiameter, dF.format(circle.getDiameter()),
-                        "The diameter was calculated incorrectly")
+                        "Название диаметр был инициализированн неверно.")
         );
     }
 
     @Test
-    @DisplayName("Test checks that IllegalArgumentException has been throws if an incorrect parameters list was passed.")
+    @DisplayName("Тест проверяет бросание исключения IllegalArgumentException, если передан некорректный лист параметров.")
     public void circleCreationWithIncorrectParamsListTest() {
         List<Double> paramsList = new ArrayList<>();
         paramsList.add(5.0);
         paramsList.add(10.0);
 
-        assertThrows(IllegalArgumentException.class, () -> {
-            Circle circle = (Circle) new CircleFactory().createShape(paramsList);
-        }, "IllegalArgumentException should have been thrown but it wasn't");
+        assertThrows(IllegalArgumentException.class, () -> new CircleFactory().createShape(paramsList),
+            "IllegalArgumentException ожидался, но не был брошен.");
     }
 
     @Test
-    @DisplayName("Test checks that IllegalArgumentException has been throws if an negative number as parameter was passed.")
+    @DisplayName("Тест проверяет бросание исключения IllegalArgumentException, если в качестве параметра передано отрицательное число.")
     public void circleCreationWithIncorrectParameterTest() {
         List<Double> paramsList = new ArrayList<>();
         paramsList.add(-5.0);
 
-        assertThrows(IllegalArgumentException.class, () -> {
-            Circle circle = (Circle) new CircleFactory().createShape(paramsList);
-        }, "IllegalArgumentException should have been thrown but it wasn't");
+        assertThrows(IllegalArgumentException.class, () -> new CircleFactory().createShape(paramsList),
+                "IllegalArgumentException ожидался, но не был брошен.");
     }
 
     @Test
-    @DisplayName("The test checks the correctness of the output of all the necessary parameters of the shape.")
+    @DisplayName("Тест проверяет работу метода, выводящего информацию о фигуре.")
     public void getTextInfoTest() {
-        String type = "Круг";
-        int radius = 5;
-        Shape circle = new Circle(type, radius);
-        String actualMessage = circle.getTextInfo();
+        var type = "Круг";
+        var radius = 5;
+        var circle = new Circle(type, radius);
+        var actualMessage = circle.getTextInfo();
 
-        String expectedMessage = """
+        var expectedMessage = """
                 Тип фигуры: Круг
                 Площадь: 78,54 кв. мм
                 Периметр: 31,42 мм
@@ -84,6 +80,6 @@ public class CircleFactoryTest {
                 """;
 
         assertEquals(expectedMessage, actualMessage,
-                "The output text pattern does not match the expected result");
+                "Паттерн выведенной информации не соответствует ожидаемой.");
     }
 }

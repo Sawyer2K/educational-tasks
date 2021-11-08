@@ -10,37 +10,37 @@ import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class WriterToFileTest {
+public class OutputFileWriterTest {
 
     @Test
     @DisplayName("Тест проверяет корректность записанных в файл данных.")
     public void writeDataTestCaseOne() throws IOException {
-        String pathToOutputFile = "./src/test/resources/TestExampleOut.txt";
-        String expected = "This text\n" +
+        var pathToOutputFile = "./src/test/resources/TestExampleOut.txt";
+        var expected = "This text\n" +
                 "must match";
-        WriterToFile fileWriter = new WriterToFile(pathToOutputFile);
+        var fileWriter = new OutputFileWriter(pathToOutputFile);
         fileWriter.writeData(expected);
 
-        StringBuilder fileData = new StringBuilder();
-        BufferedReader reader = new BufferedReader(new FileReader(pathToOutputFile));
+        var fileDataBuilder = new StringBuilder();
+        var reader = new BufferedReader(new FileReader(pathToOutputFile));
         char[] buf = new char[1024];
         int numRead;
         while ((numRead = reader.read(buf)) != -1) {
             String readData = String.valueOf(buf, 0, numRead);
-            fileData.append(readData);
+            fileDataBuilder.append(readData);
         }
-        String actual = fileData.toString();
+        var actual = fileDataBuilder.toString();
 
-        assertEquals(expected, actual, "The information written to the file does not match the expected one");
+        assertEquals(expected, actual, "Данные, записанный в файл, не соответствуют ожидаемым.");
     }
 
     @Test
     @DisplayName("Тест проверяет бросание исключения FileNotFoundException если не удалось найти или открыть выходной файл.")
     public void writeDataTestCaseTwo() {
         assertThrows(FileNotFoundException.class, () -> {
-            String pathToOutputFile = "";
-            String outputData = "Data for output";
-            WriterToFile writer = new WriterToFile(pathToOutputFile);
+            var pathToOutputFile = "";
+            var outputData = "Data for output";
+            var writer = new OutputFileWriter(pathToOutputFile);
             writer.writeData(outputData);
         }, "Ожидается исключение FileNotFoundException, однако оно не было брошено.");
     }

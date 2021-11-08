@@ -3,7 +3,6 @@ package ru.cft.focusstart.task2.modelsFactory;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import ru.cft.focusstart.task2.model.Rectangle;
-import ru.cft.focusstart.task2.model.Shape;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -14,38 +13,38 @@ import static org.junit.jupiter.api.Assertions.*;
 public class RectangleFactoryTest {
 
     @Test
-    @DisplayName("Test checks the correctness of creating a shape")
+    @DisplayName("Тест проверяет корректность создания прямоугольника")
     public void rectangleCorrectCreationTest() {
         List<Double> paramsList = List.of(8.0, 6.0);
-        Rectangle rectangle = (Rectangle) new RectangleFactory().createShape(paramsList);
+        var rectangle = (Rectangle) new RectangleFactory().createShape(paramsList);
 
-        DecimalFormat dF = new DecimalFormat("#.##");
+        var dF = new DecimalFormat("#.##");
 
-        String expectedType = "Прямоугольник";
-        String expectedArea = "48";
-        String expectedPerimeter = "28";
-        String expectedDiagonal = "10";
-        String expectedLength = "8";
-        String expectedWidth = "6";
+        var expectedType = "Прямоугольник";
+        var expectedArea = "48";
+        var expectedPerimeter = "28";
+        var expectedDiagonal = "10";
+        var expectedLength = "8";
+        var expectedWidth = "6";
 
         assertAll(
                 () -> assertEquals(expectedType, rectangle.getName(),
-                        "The type was initialized incorrectly"),
+                        "Название фигуры было инициализированно неверно."),
                 () -> assertEquals(expectedArea, dF.format(rectangle.getArea()),
-                        "The area was calculated incorrectly"),
+                        "Площадь фигуры была инициализированна неверно."),
                 () -> assertEquals(expectedPerimeter, dF.format(rectangle.getPerimeter()),
-                        "The perimeter was calculated incorrectly"),
+                        "Периметр фигуры был инициализированн неверно."),
                 () -> assertEquals(expectedDiagonal, dF.format(rectangle.getDiagonal()),
-                        "The diagonal was calculated incorrectly"),
+                        "Диагональ фигуры была инициализированная неверно."),
                 () -> assertEquals(expectedLength, dF.format(rectangle.getLength()),
-                        "The length was defined incorrectly"),
+                        "Длина фигуры была определена неверно."),
                 () -> assertEquals(expectedWidth, dF.format(rectangle.getWidth()),
-                        "The width was defined incorrectly")
+                        "Ширина фигуры была определена неверно.")
         );
     }
 
     @Test
-    @DisplayName("Test checks that IllegalArgumentException has been throws if an incorrect parameters list was passed.")
+    @DisplayName("Тест проверяет бросание исключения IllegalArgumentException, если передан некорректный лист параметров.")
     public void rectangleCreationWithIncorrectParamsListTest() {
         List<Double> paramsList = new ArrayList<>();
         paramsList.add(5.0);
@@ -54,29 +53,29 @@ public class RectangleFactoryTest {
         paramsList.add(1.0);
 
         assertThrows(IllegalArgumentException.class, () -> new RectangleFactory().createShape(paramsList),
-                "IllegalArgumentException should have been thrown but it wasn't");
+                "IllegalArgumentException ожидался, но не был брошен.");
     }
 
     @Test
-    @DisplayName("Test checks that IllegalArgumentException has been throws if an negative number as one of parameter was passed.")
+    @DisplayName("Тест проверяет бросание исключения IllegalArgumentException, если в качестве параметра передано отрицательное число.")
     public void rectangleCreationWithIncorrectParameterTest() {
         List<Double> paramsList = new ArrayList<>();
         paramsList.add(-6.0);
         paramsList.add(10.0);
 
         assertThrows(IllegalArgumentException.class, () -> new RectangleFactory().createShape(paramsList),
-                "IllegalArgumentException should have been thrown but it wasn't");
+                "IllegalArgumentException ожидался, но не был брошен.");
     }
 
 
     @Test
-    @DisplayName("The test checks the correctness of the output of all the necessary parameters of the shape")
+    @DisplayName("Тест проверяет работу метода, выводящего информацию о фигуре.")
     public void getTextInfoTest() {
         List<Double> paramsList = List.of(8.0, 6.0);
-        Rectangle rectangle = (Rectangle) new RectangleFactory().createShape(paramsList);
+        var rectangle = (Rectangle) new RectangleFactory().createShape(paramsList);
 
-        String actualMessage = rectangle.getTextInfo();
-        String expectedMessage = """
+        var actualMessage = rectangle.getTextInfo();
+        var expectedMessage = """
                 Тип фигуры: Прямоугольник
                 Площадь: 48 кв. мм
                 Периметр: 28 мм
@@ -86,6 +85,6 @@ public class RectangleFactoryTest {
                 """;
 
         assertEquals(expectedMessage, actualMessage,
-                "The output text pattern does not match the expected result");
+                "Паттерн выведенной информации не соответствует ожидаемой.");
     }
 }

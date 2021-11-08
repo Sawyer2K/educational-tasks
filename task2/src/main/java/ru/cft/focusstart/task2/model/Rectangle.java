@@ -13,8 +13,19 @@ public class Rectangle extends Shape {
         calculateParameters();
     }
 
-    @Override
-    void calculateParameters() {
+    public double getLength() {
+        return length;
+    }
+
+    public double getWidth() {
+        return width;
+    }
+
+    public double getDiagonal() {
+        return diagonal;
+    }
+
+    private void calculateParameters() {
         perimeter = length * 2 + width * 2;
         area = length * width;
         diagonal = Math.sqrt(Math.pow(length, 2) + Math.pow(width, 2));
@@ -26,7 +37,8 @@ public class Rectangle extends Shape {
                         Длина диагонали: %s мм
                         Длина: %s мм
                         Ширина: %s мм
-                        """, dF.format(diagonal),
+                        """,
+                dF.format(diagonal),
                 dF.format(length),
                 dF.format(width));
     }

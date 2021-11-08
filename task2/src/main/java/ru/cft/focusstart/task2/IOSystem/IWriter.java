@@ -4,5 +4,5 @@ import java.io.FileNotFoundException;
 
 public interface IWriter {
 
-    void writeData() throws FileNotFoundException;
+    void writeData(String data) throws FileNotFoundException;
 }

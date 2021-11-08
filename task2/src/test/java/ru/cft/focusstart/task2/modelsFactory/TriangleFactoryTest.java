@@ -3,7 +3,6 @@ package ru.cft.focusstart.task2.modelsFactory;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import ru.cft.focusstart.task2.model.Triangle;
-import ru.cft.focusstart.task2.model.Shape;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -14,59 +13,59 @@ import static org.junit.jupiter.api.Assertions.*;
 public class TriangleFactoryTest {
 
     @Test
-    @DisplayName("Test checks the correctness of creating a shape")
+    @DisplayName("Тест проверяет корректность создания треугольника.")
     public void triangleCorrectCreationTest() {
         List<Double> paramsList = List.of(3.0, 4.0, 5.0);
-        Triangle triangle = (Triangle) new TriangleFactory().createShape(paramsList);
+        var triangle = (Triangle) new TriangleFactory().createShape(paramsList);
 
-        DecimalFormat dF = new DecimalFormat("#.##");
+        var dF = new DecimalFormat("#.##");
 
-        String expectedType = "Треугольник";
-        String expectedArea = "6";
-        String expectedPerimeter = "12";
-        String expectedSideA = "3";
-        String expectedSideB = "4";
-        String expectedSideC = "5";
-        String expectedAngleA = "36,87";
-        String expectedAngleB = "53,13";
-        String expectedAngleC = "90";
+        var expectedType = "Треугольник";
+        var expectedArea = "6";
+        var expectedPerimeter = "12";
+        var expectedSideA = "3";
+        var expectedSideB = "4";
+        var expectedSideC = "5";
+        var expectedAngleA = "36,87";
+        var expectedAngleB = "53,13";
+        var expectedAngleC = "90";
 
         assertAll(
                 () -> assertEquals(expectedType, triangle.getName(),
-                        "The type was initialized incorrectly"),
+                        "Название фигуры было инициализированно неверно."),
                 () -> assertEquals(expectedArea, dF.format(triangle.getArea()),
-                        "The area was calculated incorrectly"),
+                        "Площадь фигуры была инициализированна неверно."),
                 () -> assertEquals(expectedPerimeter, dF.format(triangle.getPerimeter()),
-                        "The perimeter was calculated incorrectly"),
+                        "Периметр фигуры был инициализированн неверно."),
                 () -> assertEquals(expectedSideA, dF.format(triangle.getSideA()),
-                        "The side A was initialized incorrectly"),
+                        "Сторона А была инициализированна неверно."),
                 () -> assertEquals(expectedSideB, dF.format(triangle.getSideB()),
-                        "The side B was initialized incorrectly"),
+                        "Сторона В была инициализированна неверно."),
                 () -> assertEquals(expectedSideC, dF.format(triangle.getSideC()),
-                        "The side C was initialized incorrectly"),
+                        "Сторона С была инициализированна неверно."),
                 () -> assertEquals(expectedAngleA, dF.format(triangle.getAngleA()),
-                        "The angle opposite to side A was calculated incorrectly"),
+                        "Угол, лежащий напротив стороны А был подсчитан неверно."),
                 () -> assertEquals(expectedAngleB, dF.format(triangle.getAngleB()),
-                        "The angle opposite to side B was calculated incorrectly"),
+                        "Угол, лежащий напротив стороны В был подсчитан неверно."),
                 () -> assertEquals(expectedAngleC, dF.format(triangle.getAngleC()),
-                        "The angle opposite to side C was calculated incorrectly")
+                        "Угол, лежащий напротив стороны С был подсчитан неверно.")
 
         );
     }
 
     @Test
-    @DisplayName("Test checks that IllegalArgumentException has been throws if an incorrect parameters list was passed.")
+    @DisplayName("Тест проверяет бросание исключения IllegalArgumentException, если передан некорректный лист параметров.")
     public void triangleCreationWithIncorrectParamsListTest() {
         List<Double> paramsList = new ArrayList<>();
         paramsList.add(4.0);
         paramsList.add(8.0);
 
         assertThrows(IllegalArgumentException.class, () -> new TriangleFactory().createShape(paramsList),
-                "IllegalArgumentException should have been thrown but it wasn't");
+                "IllegalArgumentException ожидался, но не был брошен.");
     }
 
     @Test
-    @DisplayName("Test checks that IllegalArgumentException has been throws if an negative number as one of parameter was passed.")
+    @DisplayName("Тест проверяет бросание исключения IllegalArgumentException, если в качестве параметра передано отрицательное число.")
     public void triangleCreationWithIncorrectParameterTest() {
         List<Double> paramsList = new ArrayList<>();
         paramsList.add(-2.0);
@@ -74,17 +73,17 @@ public class TriangleFactoryTest {
         paramsList.add(4.0);
 
         assertThrows(IllegalArgumentException.class, () -> new TriangleFactory().createShape(paramsList),
-                "IllegalArgumentException should have been thrown but it wasn't");
+                "IllegalArgumentException ожидался, но не был брошен.");
     }
 
     @Test
-    @DisplayName("The test checks the correctness of the output of all the necessary parameters of the shape")
+    @DisplayName("Тест проверяет работу метода, выводящего информацию о фигуре.")
     public void getTextInfoTest() {
         List<Double> paramsList = List.of(3.0, 4.0, 5.0);
-        Triangle triangle = (Triangle) new TriangleFactory().createShape(paramsList);
+        var triangle = (Triangle) new TriangleFactory().createShape(paramsList);
 
-        String actualMessage = triangle.getTextInfo();
-        String expectedMessage = """
+        var actualMessage = triangle.getTextInfo();
+        var expectedMessage = """
                 Тип фигуры: Треугольник
                 Площадь: 6 кв. мм
                 Периметр: 12 мм
@@ -94,6 +93,6 @@ public class TriangleFactoryTest {
                 """;
 
         assertEquals(expectedMessage, actualMessage,
-                "The output text pattern does not match the expected result");
+                "Паттерн выведенной информации не соответствует ожидаемой.");
     }
 }

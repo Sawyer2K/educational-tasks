@@ -17,6 +17,20 @@ public class Triangle extends Shape {
         calculateParameters();
     }
 
+    private void calculateParameters() {
+        perimeter = sideA + sideB + sideC;
+
+        double sideASquare = (Math.pow(sideA, 2));
+        double sideBSquare = (Math.pow(sideB, 2));
+        double sideCSquare = (Math.pow(sideC, 2));
+
+        angleA = Math.toDegrees(Math.acos((sideBSquare + sideCSquare - sideASquare) / (2 * sideB * sideC)));
+        angleB = Math.toDegrees(Math.acos((sideASquare + sideCSquare - sideBSquare) / (2 * sideA * sideC)));
+        angleC = Math.toDegrees(Math.acos((sideASquare + sideBSquare - sideCSquare) / (2 * sideA * sideB)));
+
+        area = sideA * sideB * Math.sin(Math.toRadians(angleC)) / 2;
+    }
+
     public double getSideA() {
         return sideA;
     }
@@ -42,27 +56,13 @@ public class Triangle extends Shape {
     }
 
     @Override
-    void calculateParameters() {
-        perimeter = sideA + sideB + sideC;
-
-        double sideASquare = (Math.pow(sideA, 2));
-        double sideBSquare = (Math.pow(sideB, 2));
-        double sideCSquare = (Math.pow(sideC, 2));
-
-        angleA = Math.toDegrees(Math.acos((sideBSquare + sideCSquare - sideASquare) / (2 * sideB * sideC)));
-        angleB = Math.toDegrees(Math.acos((sideASquare + sideCSquare - sideBSquare) / (2 * sideA * sideC)));
-        angleC = Math.toDegrees(Math.acos((sideASquare + sideBSquare - sideCSquare) / (2 * sideA * sideB)));
-
-        area = sideA * sideB * Math.sin(Math.toRadians(angleC)) / 2;
-    }
-
-    @Override
     public String getTextInfo() {
         return super.getTextInfo() + String.format("""
                         Сторона A: %s мм, противолежащий угол: %s градусов
                         Сторона B: %s мм, противолежащий угол: %s градусов
                         Сторона C: %s мм, противолежащий угол: %s градусов
-                        """, dF.format(sideA),
+                        """,
+                dF.format(sideA),
                 dF.format(angleA),
                 dF.format(sideB),
                 dF.format(angleB),
