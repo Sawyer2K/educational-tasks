@@ -3,8 +3,7 @@ package ru.cft.focusstart.task2;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.cft.focusstart.task2.engine.AppDispatcher;
-import ru.cft.focusstart.task2.engine.Outputter;
-import ru.cft.focusstart.task2.engine.ShapeProcessor;
+import ru.cft.focusstart.task2.engine.ShapeGenerator;
 
 import java.io.FileNotFoundException;
 
@@ -26,9 +25,9 @@ public class Launcher {
         dispatcher.applicationConfigInit(args);
         dispatcher.shapeParamsInit();
 
-        ShapeProcessor shapeProcessor = new ShapeProcessor();
-        shapeProcessor.generateTheShape(dispatcher.getShapeParametersStorage());
-        String result = shapeProcessor.getShape().getTextInfo();
+        ShapeGenerator shapeGenerator = new ShapeGenerator();
+        shapeGenerator.generateTheShape(dispatcher.getShapeParametersStorage());
+        String result = shapeGenerator.getShape().getTextInfo();
 
         dispatcher.outputResult(result);
     }

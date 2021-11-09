@@ -8,9 +8,9 @@ import ru.cft.focusstart.task2.modelsFactory.RectangleFactory;
 import ru.cft.focusstart.task2.modelsFactory.ShapeFactory;
 import ru.cft.focusstart.task2.modelsFactory.TriangleFactory;
 
-public class ShapeProcessor {
+public class ShapeGenerator {
 
-    private static final Logger log = LoggerFactory.getLogger(ShapeProcessor.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(ShapeGenerator.class.getName());
 
     Shape shape;
 
@@ -21,13 +21,13 @@ public class ShapeProcessor {
     public void generateTheShape(ShapeParametersStorage shapeParametersStorage) {
         log.debug("Начало процесса создания фигуры.");
 
-        ShapeFactory shapeFactory = defineConcreteShapeFactory(shapeParametersStorage.getShapeType());
+        ShapeFactory shapeFactory = getConcreteShapeFactory(shapeParametersStorage.getShapeType());
         shape = shapeFactory.createShape(shapeParametersStorage.getParamsList());
 
         log.info("Фигура успешно создана.");
     }
 
-    private ShapeFactory defineConcreteShapeFactory(String shapeType) {
+    private ShapeFactory getConcreteShapeFactory(String shapeType) {
         log.debug("Выбор конкретной \"фабрики\" для создания фигуры.");
 
         return switch (shapeType) {

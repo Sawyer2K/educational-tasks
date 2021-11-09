@@ -6,7 +6,7 @@ import org.slf4j.LoggerFactory;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 
-public class OutputFileWriter implements IWriter {
+public class OutputFileWriter implements OutputWriter {
 
     private static final Logger log = LoggerFactory.getLogger(OutputFileWriter.class.getName());
 

@@ -39,14 +39,14 @@ public class AppDispatcher {
     }
 
     public void outputResult(String result) {
-        Outputter outputter;
+        ResultPrinter resultPrinter;
 
         if (appConfigStorage.getPathToOutputFile() != null) {
-            outputter = new Outputter(appConfigStorage.getPathToOutputFile());
+            resultPrinter = new ResultPrinter(appConfigStorage.getPathToOutputFile());
         } else {
-            outputter = new Outputter();
+            resultPrinter = new ResultPrinter();
         }
 
-        outputter.outputResults(result);
+        resultPrinter.outputResults(result);
     }
 }

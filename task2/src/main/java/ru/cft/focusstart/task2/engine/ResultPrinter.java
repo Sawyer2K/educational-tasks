@@ -2,30 +2,30 @@ package ru.cft.focusstart.task2.engine;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ru.cft.focusstart.task2.IOSystem.IWriter;
+import ru.cft.focusstart.task2.IOSystem.OutputWriter;
 import ru.cft.focusstart.task2.IOSystem.OutputConsoleWriter;
 import ru.cft.focusstart.task2.IOSystem.OutputFileWriter;
 
 import java.io.FileNotFoundException;
 
-public class Outputter {
+public class ResultPrinter {
 
-    private static final Logger log = LoggerFactory.getLogger(Outputter.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(ResultPrinter.class.getName());
 
     private String pathToOutputFile;
 
-    public Outputter() {
+    public ResultPrinter() {
 
     }
 
-    public Outputter(String pathToOutputFile) {
+    public ResultPrinter(String pathToOutputFile) {
         this.pathToOutputFile = pathToOutputFile;
     }
 
     public void outputResults(String result) {
         log.debug("Старт метода для вывода результата.");
 
-        IWriter writer;
+        OutputWriter writer;
 
         if (pathToOutputFile != null) {
             writer = new OutputFileWriter(pathToOutputFile);

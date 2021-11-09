@@ -8,7 +8,7 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class InputFileReader implements IReader {
+public class InputFileReader implements InputReader {
 
     private static final Logger log = LoggerFactory.getLogger(InputFileReader.class.getName());
 

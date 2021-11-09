@@ -14,14 +14,14 @@ public class ShapeParametersParser {
         log.debug("Начало парсинга параметров фигуры.");
 
         if (listOfInputData.isEmpty()) {
-            throw new ArrayStoreException("Список входных данных пуст.");
+            throw new IllegalArgumentException("Список входных данных пуст.");
         }
 
         var shapeParamsStorage = new ShapeParametersStorage();
 
         shapeParamsStorage.setShapeType(listOfInputData.get(0));
 
-        ArrayList<Double> paramsList = new ArrayList<>();
+        var paramsList = new ArrayList<Double>();
         for (int i = 1; i < listOfInputData.size(); i++) {
             paramsList.add(Double.valueOf(listOfInputData.get(i)));
         }

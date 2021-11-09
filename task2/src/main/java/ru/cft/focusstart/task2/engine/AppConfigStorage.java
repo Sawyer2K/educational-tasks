@@ -2,8 +2,8 @@ package ru.cft.focusstart.task2.engine;
 
 public class AppConfigStorage {
 
-    private static String pathToInputFile;
-    private static String pathToOutputFile;
+    private String pathToInputFile;
+    private String pathToOutputFile;
 
     public String getPathToInputFile() {
         return pathToInputFile;
