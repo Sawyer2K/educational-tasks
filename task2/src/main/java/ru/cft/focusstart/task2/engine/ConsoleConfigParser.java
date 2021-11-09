@@ -7,14 +7,8 @@ public class ConsoleConfigParser {
 
     private static final Logger log = LoggerFactory.getLogger(ConsoleConfigParser.class.getName());
 
-    private final String[] commandLineArgs;
-
-    public ConsoleConfigParser(String[] commandLineArgs) {
-        this.commandLineArgs = commandLineArgs;
-    }
-
-    public AppConfigStorage parseCommandLine() {
-        log.debug("Начало чтения аргументов командной строки.");
+    public static AppConfigStorage parseCommandLine(String[] commandLineArgs) {
+        log.debug("Начало парсинга аргументов командной строки.");
 
         var configStorage = new AppConfigStorage();
 
@@ -36,7 +30,7 @@ public class ConsoleConfigParser {
             }
         }
 
-        log.debug("Успешное окончание чтения аргументов командной строки.");
+        log.debug("Успешное парсинга чтения аргументов командной строки.");
         return configStorage;
     }
 }

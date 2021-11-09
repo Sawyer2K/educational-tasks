@@ -13,8 +13,7 @@ public class ConsoleConfigParserTest {
         var configStorage = new AppConfigStorage();
         configStorage.setPathToOutputFile("path/to/input/file");
         var inputFromCLI = new String[]{"-out", "path/to/output/file", "-file", "path/to/input/file"};
-        var configReader = new ConsoleConfigParser(inputFromCLI);
-        configReader.parseCommandLine();
+        ConsoleConfigParser.parseCommandLine(inputFromCLI);
 
         var expectedIn = "path/to/input/file";
         var expectedOut = "path/to/output/file";
@@ -33,7 +32,7 @@ public class ConsoleConfigParserTest {
         assertThrows(IllegalArgumentException.class, () -> {
             var inputFromCLI = new String[]{"out", "path/to/output/file2", "-inputFile", "path/to/input/file"};
 
-            new ConsoleConfigParser(inputFromCLI).parseCommandLine();
+            ConsoleConfigParser.parseCommandLine(inputFromCLI);
         }, "Переданы недопустимые аргументы, ожидается исключение IllegalArgumentException.");
     }
 }

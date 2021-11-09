@@ -14,14 +14,16 @@ public class TriangleFactory implements ShapeFactory {
     @Override
     public Shape createShape(List<Double> paramsList) {
         if (paramsList.size() != 3) {
-            log.error("Получен неверный список параметров. Лист параметров для треугольника должен содержать три значения - размеры сторон.");
+            log.error(String.format("Ошибка! В полученном списке количество элементов - %d. Список параметров для " +
+                    "треугольника должен содержать три значения - размеры сторон.", paramsList.size()));
 
             throw new IllegalArgumentException();
         }
 
         for (var param : paramsList) {
             if (param <= 0) {
-                log.error("Ошибка! Один из полученных параметров невалиден. Параметры должны быть ненулевыми положительными значениями");
+                log.error(String.format("Ошибка! Один из полученных параметров невалиден и имеет значение \"%f\". " +
+                        "Параметры должны быть ненулевыми положительными значениями", param));
 
                 throw new IllegalArgumentException();
             }
