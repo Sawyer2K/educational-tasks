@@ -5,8 +5,8 @@ import java.text.DecimalFormat;
 public abstract class Shape {
 
     private final String name;
-    double perimeter;
-    double area;
+    protected double perimeter;
+    protected double area;
 
     DecimalFormat dF = new DecimalFormat("#.##");
 

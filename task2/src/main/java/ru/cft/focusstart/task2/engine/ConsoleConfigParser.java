@@ -30,7 +30,7 @@ public class ConsoleConfigParser {
             }
         }
 
-        log.debug("Успешное парсинга чтения аргументов командной строки.");
+        log.debug("Успешное завершение парсинга чтения аргументов командной строки.");
         return configStorage;
     }
 }

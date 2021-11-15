@@ -17,7 +17,7 @@ public class OutputFileWriter implements OutputWriter {
     }
 
     @Override
-    public void writeData(String data) throws FileNotFoundException {
+    public void writeData(String data) throws FailedOutputException {
         try (PrintWriter writer = new PrintWriter(pathToOutputFile)) {
             writer.write(data);
 
@@ -25,7 +25,7 @@ public class OutputFileWriter implements OutputWriter {
         } catch (FileNotFoundException e) {
             log.error(String.format("Внимание! Не удалось произвести запись данных в файл, расположенный по пути %s.", pathToOutputFile));
 
-            throw e;
+            throw new FailedOutputException("Не удалось произвести запись данных в файл", e);
         }
     }
 }
