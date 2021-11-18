@@ -7,14 +7,12 @@ import ru.cft.focusstart.task2.IOSystem.OutputWriter;
 import ru.cft.focusstart.task2.IOSystem.OutputConsoleWriter;
 import ru.cft.focusstart.task2.IOSystem.OutputFileWriter;
 
-import java.io.FileNotFoundException;
-
 public class ResultPrinter {
 
     private static final Logger log = LoggerFactory.getLogger(ResultPrinter.class.getName());
 
     private String pathToOutputFile;
-    OutputWriter writer;
+    private final OutputWriter writer;
 
     public ResultPrinter() {
         writer = new OutputConsoleWriter();

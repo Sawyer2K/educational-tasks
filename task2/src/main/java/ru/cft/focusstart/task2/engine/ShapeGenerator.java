@@ -12,7 +12,7 @@ public class ShapeGenerator {
 
     private static final Logger log = LoggerFactory.getLogger(ShapeGenerator.class.getName());
 
-    Shape shape;
+    private Shape shape;
 
     public Shape getShape() {
         return shape;

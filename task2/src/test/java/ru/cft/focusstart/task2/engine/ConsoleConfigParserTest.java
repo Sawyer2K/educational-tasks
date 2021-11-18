@@ -10,10 +10,8 @@ public class ConsoleConfigParserTest {
     @Test
     @DisplayName("Тест проверяет корректное считывание параметров, указанных не по порядку, и их правильную инициализацию.")
     public void correctConfigsParsingTest() {
-        var configStorage = new AppConfigStorage();
-        configStorage.setPathToOutputFile("path/to/input/file");
         var inputFromCLI = new String[]{"-out", "path/to/output/file", "-file", "path/to/input/file"};
-        ConsoleConfigParser.parseCommandLine(inputFromCLI);
+        AppConfigStorage configStorage = ConsoleConfigParser.parseCommandLine(inputFromCLI);
 
         var expectedIn = "path/to/input/file";
         var expectedOut = "path/to/output/file";
@@ -34,6 +32,16 @@ public class ConsoleConfigParserTest {
 
             ConsoleConfigParser.parseCommandLine(inputFromCLI);
         }, "Переданы недопустимые аргументы, ожидается исключение IllegalArgumentException.");
+    }
+
+    @Test
+    @DisplayName("Тест проверяет работу метода, если передаются дублирующиеся аргументы.")
+    public void incorrectConfigsParsingWhenDuplicateArgumentsPassedTest() {
+        assertThrows(IllegalArgumentException.class, () -> {
+            var inputFromCLI = new String[]{"-out", "path/to/output/file2", "-inputFile", "path/to/input/file", "-out", "path/to/output/file3"};
+
+            ConsoleConfigParser.parseCommandLine(inputFromCLI);
+        }, "Один из переданных аргументов дублируется, ожидается исключение IllegalArgumentException.");
     }
 }
 

@@ -18,10 +18,31 @@ public class ConsoleConfigParser {
             throw new IllegalArgumentException();
         }
 
+        boolean isInputFileAlreadySpecify = false;
+        boolean isOutputFileAlreadySpecify = false;
+
         for (int i = 0; i <= commandLineArgs.length - 2; i += 2) {
             switch (commandLineArgs[i]) {
-                case "-file" -> configStorage.setPathToInputFile(commandLineArgs[i + 1]);
-                case "-out" -> configStorage.setPathToOutputFile(commandLineArgs[i + 1]);
+                case "-file" -> {
+                    if (!isInputFileAlreadySpecify) {
+                        isInputFileAlreadySpecify = true;
+                        configStorage.setPathToInputFile(commandLineArgs[i + 1]);
+                    } else {
+                        log.error(String.format("Ошибка! Флаг %s уже был передан в качестве аргумента коммандной строки, " +
+                                "а путь ко входному файлу был проинициализирован!", commandLineArgs[i]));
+                        throw new IllegalArgumentException();
+                    }
+                }
+                case "-out" -> {
+                    if (!isOutputFileAlreadySpecify) {
+                        isOutputFileAlreadySpecify = true;
+                        configStorage.setPathToOutputFile(commandLineArgs[i + 1]);
+                    } else {
+                        log.error(String.format("Ошибка! Флаг %s уже был передан в качестве аргумента коммандной строки, " +
+                                "а путь к выходному файлу был проинициализирован!", commandLineArgs[i]));
+                        throw new IllegalArgumentException();
+                    }
+                }
                 default -> {
                     log.error(String.format("В командную строку передан невалидный флаг %s. Допустимые флаги: -file и -out. " +
                             "Работа программы остановлена", commandLineArgs[i]));

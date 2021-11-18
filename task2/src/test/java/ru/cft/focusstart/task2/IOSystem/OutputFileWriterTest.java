@@ -35,13 +35,13 @@ public class OutputFileWriterTest {
     }
 
     @Test
-    @DisplayName("Тест проверяет бросание исключения FileNotFoundException если не удалось найти или открыть выходной файл.")
+    @DisplayName("Тест проверяет бросание исключения FailedOutputException если не удалось найти или открыть выходной файл.")
     public void writeDataTestCaseTwo() {
-        assertThrows(FileNotFoundException.class, () -> {
+        assertThrows(FailedOutputException.class, () -> {
             var pathToOutputFile = "";
             var outputData = "Data for output";
             var writer = new OutputFileWriter(pathToOutputFile);
             writer.writeData(outputData);
-        }, "Ожидается исключение FileNotFoundException, однако оно не было брошено.");
+        }, "Ожидается исключение FailedOutputException, однако оно не было брошено.");
     }
 }
