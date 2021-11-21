@@ -11,10 +11,11 @@ public class ResultPrinter {
 
     private static final Logger log = LoggerFactory.getLogger(ResultPrinter.class.getName());
 
-    private String pathToOutputFile;
+    private final String pathToOutputFile;
     private final OutputWriter writer;
 
     public ResultPrinter() {
+        this.pathToOutputFile = null;
         writer = new OutputConsoleWriter();
 
         log.debug("Результат будет выведен в консоль.");

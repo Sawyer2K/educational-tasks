@@ -7,7 +7,7 @@ public abstract class Shape {
     private final String name;
     protected double perimeter;
     protected double area;
-    protected final DecimalFormat dF = new DecimalFormat("#.##");
+    protected static final DecimalFormat dF = new DecimalFormat("#.##");
 
     protected Shape(String name) {
         this.name = name;
