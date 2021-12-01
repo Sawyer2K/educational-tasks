@@ -1,4 +1,5 @@
 rootProject.name = '2021_02_sbitnev'
 include 'task1'
 include 'task2'
+include 'task3'
 
