@@ -15,8 +15,8 @@ public class Controller {
     public void onCellClicked(int row, int column, ButtonType buttonType) {
         switch (buttonType) {
             case LEFT_BUTTON -> minesweeperManager.openCell(row, column);
-            case RIGHT_BUTTON -> minesweeperManager.setFlag(row, column);
-            case MIDDLE_BUTTON -> minesweeperManager.openAroundCell(row, column);
+            case MIDDLE_BUTTON -> minesweeperManager.setFlag(row, column);
+            case RIGHT_BUTTON -> minesweeperManager.openAroundCell(row, column);
         }
     }
 

@@ -7,6 +7,13 @@ import ru.cft.focusstart.task3.renderers.GameViewRenderer;
 import ru.cft.focusstart.task3.view.*;
 
 public class Application {
+
+//    static SettingsWindow settingsWindow;
+//    static HighScoresWindow highScoresWindow;
+//    static MinesweeperManager minesweeperManager;
+//    static Controller controller;
+//    static ViewRenderer viewRenderer;
+
     public static void main(String[] args) {
 //        MainWindow mainWindow = new MainWindow();
 //        SettingsWindow settingsWindow = new SettingsWindow(mainWindow);
@@ -38,31 +45,45 @@ public class Application {
 //        mainWindow.setCellImage(1, 6, GameImage.NUM_7);
 //        mainWindow.setCellImage(1, 7, GameImage.NUM_8);
 
-        run(determineGameType(args));
+        runNewGame(determineGameType(args));
     }
 
-    private static void run(GameType gameType) {
+    private static void runNewGame(GameType gameType) {
         MainWindow mainWindow = new MainWindow();
         SettingsWindow settingsWindow = new SettingsWindow(mainWindow);
         HighScoresWindow highScoresWindow = new HighScoresWindow(mainWindow);
-        mainWindow.createGameField(10, 10);
-        mainWindow.setVisible(true);
 
         MinesweeperManager minesweeperManager = new MinesweeperManager(gameType);
         Controller controller = new Controller(minesweeperManager);
         ViewRenderer viewRenderer = new GameViewRenderer(mainWindow);
         minesweeperManager.attachView(viewRenderer);
 
+        int rows = minesweeperManager.getBoard().getRowsCount();
+        int cols = minesweeperManager.getBoard().getColumnsCount();
+
+        mainWindow.createGameField(rows, cols);
+        mainWindow.setTimerValue(0);
+        mainWindow.setBombsCount(minesweeperManager.getBoard().getMinesCount());
+        mainWindow.setVisible(true);
+
         mainWindow.setNewGameMenuAction(e -> {
+            controller.onNewGameClicked(gameType);
+            mainWindow.setTimerValue(0);
+            mainWindow.setBombsCount(minesweeperManager.getBoard().getMinesCount());
+        });
+
+        mainWindow.setSettingsMenuAction(e -> {
+            settingsWindow.setVisible(true);
+            settingsWindow.setGameTypeListener(gameType1 -> {
+
+            });
 
         });
-        mainWindow.setSettingsMenuAction(e -> settingsWindow.setVisible(true));
         mainWindow.setHighScoresMenuAction(e -> highScoresWindow.setVisible(true));
         mainWindow.setExitMenuAction(e -> mainWindow.dispose());
         mainWindow.setCellListener((x, y, buttonType) -> {
             controller.onCellClicked(x, y, buttonType);
         });
-
     }
 
     private static GameType determineGameType(String[] args) {

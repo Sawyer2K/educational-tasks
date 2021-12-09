@@ -1,9 +1,7 @@
 package ru.cft.focusstart.task3.renderers;
 
 import ru.cft.focusstart.task3.model.Result;
-import ru.cft.focusstart.task3.view.GameImageIconMap;
-import ru.cft.focusstart.task3.view.LoseWindow;
-import ru.cft.focusstart.task3.view.MainWindow;
+import ru.cft.focusstart.task3.view.*;
 
 public class GameViewRenderer implements ViewRenderer {
     MainWindow mainWindow;
@@ -14,12 +12,12 @@ public class GameViewRenderer implements ViewRenderer {
 
     @Override
     public void renderVictory(int seconds) {
-
+        new WinWindow(mainWindow);
     }
 
     @Override
     public void renderVictoryWithNewRecord(int seconds) {
-
+        new WinWindow(mainWindow);
     }
 
     @Override
@@ -36,11 +34,12 @@ public class GameViewRenderer implements ViewRenderer {
 
     @Override
     public void updateMinLeftStatus(int status) {
-
+        //mainWindow.setBombsCount(status);
     }
 
     @Override
     public void updateTimerStatus(int status) {
+        mainWindow.setTimerValue(status);
     }
 
     @Override
@@ -50,6 +49,6 @@ public class GameViewRenderer implements ViewRenderer {
 
     @Override
     public void renderHighScore(Result[] results) {
-
+        new HighScoresWindow(mainWindow);
     }
 }
