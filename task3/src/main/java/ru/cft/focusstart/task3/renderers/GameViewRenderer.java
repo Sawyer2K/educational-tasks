@@ -34,7 +34,7 @@ public class GameViewRenderer implements ViewRenderer {
 
     @Override
     public void updateMinLeftStatus(int status) {
-        //mainWindow.setBombsCount(status);
+        mainWindow.setBombsCount(status);
     }
 
     @Override

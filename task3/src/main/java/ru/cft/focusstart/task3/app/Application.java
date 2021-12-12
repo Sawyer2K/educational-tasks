@@ -8,11 +8,16 @@ import ru.cft.focusstart.task3.view.*;
 
 public class Application {
 
-//    static SettingsWindow settingsWindow;
-//    static HighScoresWindow highScoresWindow;
-//    static MinesweeperManager minesweeperManager;
-//    static Controller controller;
-//    static ViewRenderer viewRenderer;
+    static MainWindow mainWindow;
+    static SettingsWindow settingsWindow;
+    static HighScoresWindow highScoresWindow;
+    static MinesweeperManager minesweeperManager;
+    static Controller controller;
+    static ViewRenderer viewRenderer;
+
+    static int rows = 10;
+    static int cols = 10;
+    static int bombsCount = 10;
 
     public static void main(String[] args) {
 //        MainWindow mainWindow = new MainWindow();
@@ -48,23 +53,25 @@ public class Application {
         runNewGame(determineGameType(args));
     }
 
-    private static void runNewGame(GameType gameType) {
-        MainWindow mainWindow = new MainWindow();
-        SettingsWindow settingsWindow = new SettingsWindow(mainWindow);
-        HighScoresWindow highScoresWindow = new HighScoresWindow(mainWindow);
+    public static void runNewGame(GameType gameType) {
+        minesweeperManager = new MinesweeperManager(gameType);
+        controller = new Controller(minesweeperManager);
 
-        MinesweeperManager minesweeperManager = new MinesweeperManager(gameType);
-        Controller controller = new Controller(minesweeperManager);
-        ViewRenderer viewRenderer = new GameViewRenderer(mainWindow);
-        minesweeperManager.attachView(viewRenderer);
+        mainWindow = new MainWindow();
+        settingsWindow = new SettingsWindow(mainWindow);
+        highScoresWindow = new HighScoresWindow(mainWindow);
+        viewRenderer = new GameViewRenderer(mainWindow);
 
-        int rows = minesweeperManager.getBoard().getRowsCount();
-        int cols = minesweeperManager.getBoard().getColumnsCount();
+        rows = minesweeperManager.getBoard().getRowsCount();
+        cols = minesweeperManager.getBoard().getColumnsCount();
 
         mainWindow.createGameField(rows, cols);
         mainWindow.setTimerValue(0);
-        mainWindow.setBombsCount(minesweeperManager.getBoard().getMinesCount());
+        bombsCount = minesweeperManager.getBoard().getMinesCount();
+        mainWindow.setBombsCount(bombsCount);
         mainWindow.setVisible(true);
+
+        minesweeperManager.attachView(viewRenderer);
 
         mainWindow.setNewGameMenuAction(e -> {
             controller.onNewGameClicked(gameType);

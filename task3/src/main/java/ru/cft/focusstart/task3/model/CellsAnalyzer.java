@@ -25,7 +25,7 @@ public final class CellsAnalyzer {
         for (int rowIterator = row - 1; rowIterator <= row + 1; rowIterator++) {
             for (int columnIterator = column - 1; columnIterator <= column + 1; columnIterator++) {
                 if (isValidCell(board, rowIterator, columnIterator)) {
-                    if (board.getCell(rowIterator, columnIterator).isFlag()) {
+                    if (board.getCell(rowIterator, columnIterator).isMined()) {
                         minCounterNearCell++;
                     }
                 }

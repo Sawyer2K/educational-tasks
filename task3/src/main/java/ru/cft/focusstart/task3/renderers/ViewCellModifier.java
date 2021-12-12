@@ -73,6 +73,7 @@ public class ViewCellModifier {
                 if ((bypassRow == row && bypassColumn == column) || !CellsAnalyzer.isValidCell(board, bypassRow, bypassColumn)) {
                     continue;
                 }
+
                 openNonMinedCell(bypassRow, bypassColumn);
             }
         }
@@ -80,9 +81,9 @@ public class ViewCellModifier {
 
     public void setFlag(int row, int column, boolean flag) {
         if (flag) {
-            viewNotifier.notifyViewNewCellStatus(row, column, "closed");
-        } else {
             viewNotifier.notifyViewNewCellStatus(row, column, "marked");
+        } else {
+            viewNotifier.notifyViewNewCellStatus(row, column, "closed");
         }
     }
 

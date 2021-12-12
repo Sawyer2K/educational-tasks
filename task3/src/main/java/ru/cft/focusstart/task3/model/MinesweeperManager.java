@@ -118,12 +118,16 @@ public class MinesweeperManager {
             return;
         }
 
+        if (minesLeft == 0 && !cell.isFlag()) {
+            return;
+        }
+
         boolean flagSet = !cell.isFlag();
 
         cell.setFlag(flagSet);
         viewCellModifier.setFlag(row, column, flagSet);
 
-        minesLeft = flagSet ? minesLeft - 1 : minesLeft + 1;
+        minesLeft = flagSet ? --minesLeft : ++minesLeft;
         notifyViewMinLeft();
     }
 
