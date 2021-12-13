@@ -27,8 +27,4 @@ public class Controller {
     public void onHighScoreClicked() {
         minesweeperManager.notifyViewHighScoreTable();
     }
-
-    public void handleUserAddPlayerName(String playerName) {
-        minesweeperManager.setPlayerName(playerName);
-    }
 }

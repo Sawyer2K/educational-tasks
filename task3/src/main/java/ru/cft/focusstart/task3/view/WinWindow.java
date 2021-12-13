@@ -24,7 +24,7 @@ public class WinWindow extends JDialog {
         setResizable(false);
         pack();
         setLocationRelativeTo(null);
-        setVisible(true);
+        setVisible(false);
     }
 
     public void setNewGameListener(ActionListener newGameListener) {

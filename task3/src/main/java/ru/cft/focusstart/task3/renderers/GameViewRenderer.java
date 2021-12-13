@@ -1,28 +1,51 @@
 package ru.cft.focusstart.task3.renderers;
 
+import ru.cft.focusstart.task3.app.Application;
+import ru.cft.focusstart.task3.model.HighScoreTable;
 import ru.cft.focusstart.task3.model.Result;
 import ru.cft.focusstart.task3.view.*;
 
-public class GameViewRenderer implements ViewRenderer {
-    MainWindow mainWindow;
+import java.util.Scanner;
 
-    public GameViewRenderer(MainWindow mainWindow) {
+public class GameViewRenderer implements ViewRenderer {
+
+    MainWindow mainWindow;
+    WinWindow winWindow;
+    LoseWindow loseWindow;
+    HighScoresWindow highScoresWindow;
+    RecordsWindow recordsWindow;
+    HighScoreTable highScoreTable;
+
+    public GameViewRenderer(MainWindow mainWindow, WinWindow winWindow, LoseWindow loseWindow, HighScoresWindow highScoresWindow,
+                            RecordsWindow recordsWindow, HighScoreTable highScoreTable) {
         this.mainWindow = mainWindow;
+        this.winWindow = winWindow;
+        this.loseWindow = loseWindow;
+        this.highScoresWindow = highScoresWindow;
+        this.recordsWindow = recordsWindow;
+        this.highScoreTable = highScoreTable;
     }
 
     @Override
     public void renderVictory(int seconds) {
-        new WinWindow(mainWindow);
+        winWindow.setVisible(true);
+
     }
 
     @Override
     public void renderVictoryWithNewRecord(int seconds) {
-        new WinWindow(mainWindow);
+        recordsWindow.setVisible(true);
+        Application.updateHighScore(seconds);
+
+//        recordsWindow = new RecordsWindow(mainWindow);
+//        recordsWindow.setNameListener(playerName -> {
+//            Application.updateHighScore(playerName, seconds);
+//        });
     }
 
     @Override
     public void renderLoss() {
-        new LoseWindow(mainWindow);
+        loseWindow.setVisible(true);
     }
 
     @Override
@@ -49,6 +72,9 @@ public class GameViewRenderer implements ViewRenderer {
 
     @Override
     public void renderHighScore(Result[] results) {
-        new HighScoresWindow(mainWindow);
+        highScoresWindow.setVisible(true);
+        highScoresWindow.setNoviceRecord(highScoreTable.getNovicePlayerName(), highScoreTable.getNoviceTimeValue());
+        highScoresWindow.setMediumRecord(highScoreTable.getMediumPlayerName(), highScoreTable.getMediumTimeValue());
+        highScoresWindow.setExpertRecord(highScoreTable.getExpertPlayerName(), highScoreTable.getExpertTimeValue());
     }
 }

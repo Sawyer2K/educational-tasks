@@ -96,7 +96,7 @@ public class ViewCellModifier {
 
                 if (board.getCell(row, column).isMined()) {
                     if (board.getCell(row, column).isFlag()) {
-                        viewNotifier.notifyViewNewCellStatus(row, column, "0");
+                        viewNotifier.notifyViewNewCellStatus(row, column, "bomb");
                     } else {
                         viewNotifier.notifyViewNewCellStatus(row, column, "bomb");
                     }

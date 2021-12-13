@@ -20,7 +20,6 @@ public class MinesweeperManager {
     private int minesLeft;
     private boolean endGame = false;
     private int seconds = 0;
-    private String playerName;
     private final HighScoreTable highScoreTable;
     private Timer timer;
     private GameType gameType;
@@ -49,6 +48,7 @@ public class MinesweeperManager {
 
     public void createNewGame(GameType gameType) {
         Application.main(new String[]{gameType.name()});
+//        Application.runNewGame();
     }
 
     public void createNewGame() {
@@ -80,8 +80,9 @@ public class MinesweeperManager {
             createGameEnd(row, column, false);
         } else {
             viewCellModifier.openNonMinedCell(row, column);
-            if (board.getClosedCells() == totalMines) {
-              createVictory();
+
+            if (isVictory()) {
+                createGameEnd(row, column, true);
             }
         }
 
@@ -106,8 +107,9 @@ public class MinesweeperManager {
                 return;
             }
         }
+
         if (isVictory()) {
-            createVictory();
+            createGameEnd(row, column, true);
         }
     }
 
@@ -131,12 +133,8 @@ public class MinesweeperManager {
         notifyViewMinLeft();
     }
 
-    public void setPlayerName(String playerName) {
-        this.playerName = playerName;
-    }
-
     public void notifyViewHighScoreTable() {
-        viewNotifier.notifyViewsHighScore(highScoreTable.getTopOneResultInEachGameType());
+        viewNotifier.notifyViewsHighScore(highScoreTable.getTopResults());
     }
 
     private void runTimer() {
@@ -170,10 +168,10 @@ public class MinesweeperManager {
     }
 
     private void createVictory() {
-        Result currentResult = new Result(playerName, gameType.name(), seconds);
+        Result currentResult = new Result("", gameType.name(), seconds);
 
         if (highScoreTable.isNewRecord(currentResult)) {
-            highScoreTable.updateHighScore(currentResult);
+//            highScoreTable.updateHighScore(currentResult);
             viewNotifier.notifyViewsVictoryWithNewRecord(seconds);
         } else {
             viewNotifier.notifyViewsVictory(seconds);

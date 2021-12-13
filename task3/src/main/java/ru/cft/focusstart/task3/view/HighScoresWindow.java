@@ -3,7 +3,7 @@ package ru.cft.focusstart.task3.view;
 import javax.swing.*;
 import java.awt.*;
 
-public class HighScoresWindow extends JDialog {
+public class  HighScoresWindow extends JDialog {
     public static final String DEFAULT_RECORD_TEXT = "Unknown - 999";
 
     private final JLabel noviceRecordLabel;

@@ -14,14 +14,38 @@ public class HighScoreTable {
     private static final int MEDIUM_RESULT_INDEX = 1;
     private static final int EXPERT_RESULT_INDEX = 2;
 
-    private final Result[] topOneResultInEachGameType = new Result[3];
+    private Result[] topResults = new Result[3];
 
     public HighScoreTable() {
         readFile();
     }
 
-    public Result[] getTopOneResultInEachGameType() {
-        return topOneResultInEachGameType;
+    public Result[] getTopResults() {
+        return topResults;
+    }
+
+    public String getNovicePlayerName() {
+        return topResults[NOVICE_RESULT_INDEX].getPlayerName();
+    }
+
+    public int getNoviceTimeValue() {
+        return topResults[NOVICE_RESULT_INDEX].getSeconds();
+    }
+
+    public String getMediumPlayerName() {
+        return topResults[MEDIUM_RESULT_INDEX].getPlayerName();
+    }
+
+    public int getMediumTimeValue() {
+        return topResults[MEDIUM_RESULT_INDEX].getSeconds();
+    }
+
+    public String getExpertPlayerName() {
+        return topResults[EXPERT_RESULT_INDEX].getPlayerName();
+    }
+
+    public int getExpertTimeValue() {
+        return topResults[EXPERT_RESULT_INDEX].getSeconds();
     }
 
     public boolean isNewRecord(Result currentResult) {
@@ -29,10 +53,10 @@ public class HighScoreTable {
             case "NOVICE" -> NOVICE_RESULT_INDEX;
             case "MEDIUM" -> MEDIUM_RESULT_INDEX;
             case "EXPERT" -> EXPERT_RESULT_INDEX;
-            default -> 0;
+            default -> -1;
         };
 
-        return currentResult.getSeconds() < topOneResultInEachGameType[index].getSeconds();
+        return currentResult.getSeconds() < topResults[index].getSeconds();
     }
 
     public void updateHighScore(Result currentResult) {
@@ -40,23 +64,36 @@ public class HighScoreTable {
             case "NOVICE" -> NOVICE_RESULT_INDEX;
             case "MEDIUM" -> MEDIUM_RESULT_INDEX;
             case "EXPERT" -> EXPERT_RESULT_INDEX;
-            default -> 0;
+            default -> -1;
         };
 
-        topOneResultInEachGameType[index] = currentResult;
+        topResults[index] = currentResult;
 
-        writeInFile();
+        writeInFile(topResults);
     }
 
     private void readFile() {
+        if (!HIGH_SCORE_FILE.isFile()) {
+            createAnInitialHighScoreFile();
+            writeInFile(topResults);
+        }
+
         try (Scanner scanner = new Scanner(HIGH_SCORE_FILE)) {
             while (scanner.hasNextLine()) {
                 Optional<Result> resultOptional = parseLine(scanner.nextLine());
-                resultOptional.ifPresent(this::addResultToHighScoreList);
+                resultOptional.ifPresent(result -> addResultToHighScoreList(result));
             }
         } catch (IOException e) {
             //log error не удалось открыть файл
         }
+    }
+
+    private void createAnInitialHighScoreFile() {
+        addResultToHighScoreList(new Result("Unknown", "NOVICE", 999));
+        addResultToHighScoreList(new Result("Unknown", "MEDIUM", 999));
+        addResultToHighScoreList(new Result("Unknown", "EXPERT", 999));
+
+        writeInFile(topResults);
     }
 
     private Optional<Result> parseLine(String line) {
@@ -89,17 +126,17 @@ public class HighScoreTable {
             case "NOVICE" -> NOVICE_RESULT_INDEX;
             case "MEDIUM" -> MEDIUM_RESULT_INDEX;
             case "EXPERT" -> EXPERT_RESULT_INDEX;
-            default -> 0;
+            default -> -1;
         };
 
-        topOneResultInEachGameType[index] = result;
+        topResults[index] = result;
     }
 
-    private void writeInFile() {
+    private void writeInFile(Result[] topResults) {
         try (FileOutputStream fileOutputStream = new FileOutputStream(HIGH_SCORE_FILE)) {
             StringBuilder results = new StringBuilder();
 
-            for (Result result : topOneResultInEachGameType) {
+            for (Result result : topResults) {
                 if (result != null) {
                     results.append(convertToString(result));
                 }
