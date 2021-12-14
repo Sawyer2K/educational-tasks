@@ -41,7 +41,7 @@ public class Application {
         recordsWindow = new RecordsWindow(mainWindow);
         viewRenderer = new GameViewRenderer(mainWindow, winWindow, loseWindow, highScoresWindow, recordsWindow, highScoreTable);
 
-        mainActionsInit();
+        actionListenersInit();
         runNewGame();
     }
 
@@ -56,6 +56,10 @@ public class Application {
         invalidateGraphic();
     }
 
+    public static void updateHighScore(int seconds) {
+        highScoreTable.updateHighScore(new Result(playerName, gameType.name(), seconds));
+    }
+
     private static void invalidateGraphic() {
         mainWindow.createGameField(rows, cols);
         mainWindow.setTimerValue(0);
@@ -64,37 +68,27 @@ public class Application {
         minesweeperManager.attachView(viewRenderer);
     }
 
-    private static void mainActionsInit() {
-        mainWindow.setNewGameMenuAction(e -> Application.runNewGame());
-        mainWindow.setHighScoresMenuAction(e -> highScoresWindow.setVisible(true));
+    private static void actionListenersInit() {
+        mainWindow.setNewGameMenuAction(e -> controller.onNewGameClicked());
+        mainWindow.setHighScoresMenuAction(e -> controller.onHighScoreClicked());
         mainWindow.setSettingsMenuAction(e -> {
             settingsWindow.setVisible(true);
-            Application.runNewGame();
+            controller.onNewGameClicked();
             settingsWindow.dispose();
         });
+        mainWindow.setAboutMenuAction(e -> new AboutWindow(mainWindow));
         mainWindow.setExitMenuAction(e -> mainWindow.dispose());
-        mainWindow.setCellListener((x, y, buttonType) -> {
-            controller.onCellClicked(x, y, buttonType);
-        });
+        mainWindow.setCellListener((x, y, buttonType) -> controller.onCellClicked(x, y, buttonType));
 
         settingsWindow.setGameTypeListener(type -> gameType = type);
         settingsWindow.setGameType(gameType);
 
-        winWindow.setNewGameListener(e -> Application.runNewGame());
+        winWindow.setNewGameListener(e -> controller.onNewGameClicked());
         winWindow.setExitListener(e -> winWindow.dispose());
 
-        loseWindow.setNewGameListener(e -> Application.runNewGame());
+        loseWindow.setNewGameListener(e -> controller.onNewGameClicked());
         loseWindow.setExitListener(e -> loseWindow.dispose());
 
-        recordsWindow.setNameListener(name -> {
-            playerName = name;
-        });
-    }
-
-    public static void updateHighScore(int seconds) {
-        highScoreTable.updateHighScore(new Result(playerName, gameType.name(), seconds));
-        highScoresWindow.setNoviceRecord(highScoreTable.getNovicePlayerName(), highScoreTable.getNoviceTimeValue());
-        highScoresWindow.setMediumRecord(highScoreTable.getMediumPlayerName(), highScoreTable.getMediumTimeValue());
-        highScoresWindow.setExpertRecord(highScoreTable.getExpertPlayerName(), highScoreTable.getExpertTimeValue());
+        recordsWindow.setNameListener(name -> playerName = name);
     }
 }

@@ -41,9 +41,5 @@ public class Cell {
     public void insertMine() {
         mined = true;
     }
-
-    public void removeMine() {
-        mined = false;
-    }
 }
 

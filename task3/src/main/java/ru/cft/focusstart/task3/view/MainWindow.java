@@ -14,6 +14,7 @@ public class MainWindow extends JFrame {
     private JMenuItem highScoresMenu;
     private JMenuItem settingsMenu;
     private JMenuItem exitMenu;
+    private JMenuItem aboutWindow;
 
     private CellEventListener listener;
 
@@ -43,6 +44,7 @@ public class MainWindow extends JFrame {
         gameMenu.addSeparator();
         gameMenu.add(highScoresMenu = new JMenuItem("High Scores"));
         gameMenu.add(settingsMenu = new JMenuItem("Settings"));
+        gameMenu.add(aboutWindow = new JMenuItem("About"));
         gameMenu.addSeparator();
         gameMenu.add(exitMenu = new JMenuItem("Exit"));
 
@@ -60,6 +62,10 @@ public class MainWindow extends JFrame {
 
     public void setSettingsMenuAction(ActionListener listener) {
         settingsMenu.addActionListener(listener);
+    }
+
+    public void setAboutMenuAction(ActionListener listener) {
+        aboutWindow.addActionListener(listener);
     }
 
     public void setExitMenuAction(ActionListener listener) {

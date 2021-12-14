@@ -16,7 +16,5 @@ public interface ViewRenderer {
 
     void updateTimerStatus(int status);
 
-    void renderAbout();
-
     void renderHighScore(Result[] results);
 }

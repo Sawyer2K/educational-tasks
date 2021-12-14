@@ -5,8 +5,6 @@ import ru.cft.focusstart.task3.model.HighScoreTable;
 import ru.cft.focusstart.task3.model.Result;
 import ru.cft.focusstart.task3.view.*;
 
-import java.util.Scanner;
-
 public class GameViewRenderer implements ViewRenderer {
 
     MainWindow mainWindow;
@@ -36,11 +34,6 @@ public class GameViewRenderer implements ViewRenderer {
     public void renderVictoryWithNewRecord(int seconds) {
         recordsWindow.setVisible(true);
         Application.updateHighScore(seconds);
-
-//        recordsWindow = new RecordsWindow(mainWindow);
-//        recordsWindow.setNameListener(playerName -> {
-//            Application.updateHighScore(playerName, seconds);
-//        });
     }
 
     @Override
@@ -66,15 +59,10 @@ public class GameViewRenderer implements ViewRenderer {
     }
 
     @Override
-    public void renderAbout() {
-
-    }
-
-    @Override
     public void renderHighScore(Result[] results) {
-        highScoresWindow.setVisible(true);
         highScoresWindow.setNoviceRecord(highScoreTable.getNovicePlayerName(), highScoreTable.getNoviceTimeValue());
         highScoresWindow.setMediumRecord(highScoreTable.getMediumPlayerName(), highScoreTable.getMediumTimeValue());
         highScoresWindow.setExpertRecord(highScoreTable.getExpertPlayerName(), highScoreTable.getExpertTimeValue());
+        highScoresWindow.setVisible(true);
     }
 }

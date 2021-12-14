@@ -8,30 +8,32 @@ public final class CellsAnalyzer {
     }
 
     public static int countHowManyFlagsAroundCell(Board board, int row, int column) {
-        int flagsCounterNearCell = 0;
+        int flagsCountAroundCell = 0;
+
         for (int rowIterator = row - 1; rowIterator <= row + 1; rowIterator++) {
             for (int columnIterator = column - 1; columnIterator <= column + 1; columnIterator++) {
                 if (isValidCell(board, rowIterator, columnIterator) && board.getCell(rowIterator, columnIterator).isFlag()) {
-                    flagsCounterNearCell++;
+                    flagsCountAroundCell++;
                 }
             }
         }
 
-        return flagsCounterNearCell;
+        return flagsCountAroundCell;
     }
 
     public static int countHowManyMinesAroundCell(Board board, int row, int column) {
-        int minCounterNearCell = 0;
+        int minCounterAroundCell = 0;
+
         for (int rowIterator = row - 1; rowIterator <= row + 1; rowIterator++) {
             for (int columnIterator = column - 1; columnIterator <= column + 1; columnIterator++) {
                 if (isValidCell(board, rowIterator, columnIterator)) {
                     if (board.getCell(rowIterator, columnIterator).isMined()) {
-                        minCounterNearCell++;
+                        minCounterAroundCell++;
                     }
                 }
             }
         }
 
-        return minCounterNearCell;
+        return minCounterAroundCell;
     }
 }

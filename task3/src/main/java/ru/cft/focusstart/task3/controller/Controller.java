@@ -2,7 +2,6 @@ package ru.cft.focusstart.task3.controller;
 
 import ru.cft.focusstart.task3.model.MinesweeperManager;
 import ru.cft.focusstart.task3.view.ButtonType;
-import ru.cft.focusstart.task3.view.GameType;
 
 public class Controller {
 
@@ -20,8 +19,8 @@ public class Controller {
         }
     }
 
-    public void onNewGameClicked(GameType gameType) {
-        minesweeperManager.createNewGame(gameType);
+    public void onNewGameClicked() {
+        minesweeperManager.createNewGame();
     }
 
     public void onHighScoreClicked() {

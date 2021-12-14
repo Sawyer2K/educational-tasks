@@ -74,21 +74,21 @@ public class HighScoreTable {
 
     private void readFile() {
         if (!HIGH_SCORE_FILE.isFile()) {
-            createAnInitialHighScoreFile();
+            createAnInitHighScoreFileIfNotExist();
             writeInFile(topResults);
         }
 
         try (Scanner scanner = new Scanner(HIGH_SCORE_FILE)) {
             while (scanner.hasNextLine()) {
                 Optional<Result> resultOptional = parseLine(scanner.nextLine());
-                resultOptional.ifPresent(result -> addResultToHighScoreList(result));
+                resultOptional.ifPresent(this::addResultToHighScoreList);
             }
         } catch (IOException e) {
             //log error не удалось открыть файл
         }
     }
 
-    private void createAnInitialHighScoreFile() {
+    private void createAnInitHighScoreFileIfNotExist() {
         addResultToHighScoreList(new Result("Unknown", "NOVICE", 999));
         addResultToHighScoreList(new Result("Unknown", "MEDIUM", 999));
         addResultToHighScoreList(new Result("Unknown", "EXPERT", 999));

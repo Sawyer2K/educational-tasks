@@ -7,22 +7,24 @@ import ru.cft.focusstart.task3.renderers.ViewCellModifier;
 import ru.cft.focusstart.task3.view.GameType;
 
 import java.util.Map;
+import java.util.Random;
 import java.util.Timer;
 
 public class MinesweeperManager {
+
+    private final Board board;
     private final int rowNumber;
     private final int columnNumber;
     private final int totalMines;
     private final int totalCells;
     private final ViewCellModifier viewCellModifier;
-    private final ViewNotifier viewNotifier;
-    private final Board board;
-    private int minesLeft;
-    private boolean endGame = false;
-    private int seconds = 0;
     private final HighScoreTable highScoreTable;
+    private final ViewNotifier viewNotifier;
+    private final GameType gameType;
+    private boolean endGame = false;
+    private int minesLeft;
+    private int seconds = 0;
     private Timer timer;
-    private GameType gameType;
 
     public MinesweeperManager(GameType gameType) {
         this.rowNumber = getRowNumberByGameType(gameType);
@@ -46,13 +48,8 @@ public class MinesweeperManager {
         this.seconds = seconds;
     }
 
-    public void createNewGame(GameType gameType) {
-        Application.main(new String[]{gameType.name()});
-//        Application.runNewGame();
-    }
-
     public void createNewGame() {
-        Application.main(new String[]{"NOVICE"});
+        Application.runNewGame();
     }
 
     public void attachView(ViewRenderer viewRenderer) {
@@ -63,13 +60,14 @@ public class MinesweeperManager {
     public void openCell(int row, int column) {
         if (board.getClosedCells() == totalCells) {
             runTimer();
+            fillingBoardWithMines(board, totalMines);
         }
 
         if (endGame) {
             return;
         }
 
-        Cell cell = board.getCell(row, column);
+        var cell = board.getCell(row, column);
 
         if (cell.isFlag()) {
             return;
@@ -98,8 +96,8 @@ public class MinesweeperManager {
             return;
         }
 
-        int totalMinesAroundForCell = CellsAnalyzer.countHowManyMinesAroundCell(board, row, column);
-        int totalFlagsAroundForCell = CellsAnalyzer.countHowManyFlagsAroundCell(board, row, column);
+        var totalMinesAroundForCell = CellsAnalyzer.countHowManyMinesAroundCell(board, row, column);
+        var totalFlagsAroundForCell = CellsAnalyzer.countHowManyFlagsAroundCell(board, row, column);
         if (totalFlagsAroundForCell == totalMinesAroundForCell) {
             Map<Integer, Integer> minedMap = viewCellModifier.openAroundNonFlaggedCells(row, column);
             if (minedMap.size() > 0) {
@@ -114,7 +112,7 @@ public class MinesweeperManager {
     }
 
     public void setFlag(int row, int column) {
-        Cell cell = board.getCell(row, column);
+        var cell = board.getCell(row, column);
 
         if (endGame || cell.isOpened()) {
             return;
@@ -124,7 +122,7 @@ public class MinesweeperManager {
             return;
         }
 
-        boolean flagSet = !cell.isFlag();
+        var flagSet = !cell.isFlag();
 
         cell.setFlag(flagSet);
         viewCellModifier.setFlag(row, column, flagSet);
@@ -138,8 +136,8 @@ public class MinesweeperManager {
     }
 
     private void runTimer() {
-        Timer timer = new Timer();
-        MinesweeperTimer minesweeperTimer = new MinesweeperTimer(this);
+        var timer = new Timer();
+        var minesweeperTimer = new MinesweeperTimer(this);
         timer.schedule(minesweeperTimer, 1000, 1000);
         this.timer = timer;
     }
@@ -168,10 +166,9 @@ public class MinesweeperManager {
     }
 
     private void createVictory() {
-        Result currentResult = new Result("", gameType.name(), seconds);
+        var currentResult = new Result("", gameType.name(), seconds);
 
         if (highScoreTable.isNewRecord(currentResult)) {
-//            highScoreTable.updateHighScore(currentResult);
             viewNotifier.notifyViewsVictoryWithNewRecord(seconds);
         } else {
             viewNotifier.notifyViewsVictory(seconds);
@@ -203,5 +200,36 @@ public class MinesweeperManager {
             case MEDIUM -> 40;
             case EXPERT -> 99;
         };
+    }
+
+    private void fillingBoardWithMines(final Board board, int mines) {
+
+        var numberOfMinesSet = 0;
+
+        for (var row = 0; row < board.getRowsCount(); row++) {
+            for (var col = 0; col < board.getColumnsCount(); col++) {
+                if (numberOfMinesSet < mines) {
+                    board.getCell(row, col).insertMine();
+                    numberOfMinesSet++;
+                }
+            }
+        }
+
+        shuffleBoard(board);
+    }
+
+    private void shuffleBoard(Board board) {
+        var random = new Random();
+
+        for (var row = board.getRowsCount() - 1; row > 0; row--) {
+            for (var col = board.getColumnsCount() - 1; col > 0; col--) {
+                var rowRandom = random.nextInt(row + 1);
+                var colRandom = random.nextInt(col + 1);
+
+                var temp = board.getCell(row, col);
+                board.setCell(board.getCell(rowRandom, colRandom), row, col);
+                board.setCell(temp, rowRandom, colRandom);
+            }
+        }
     }
 }
