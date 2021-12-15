@@ -1,5 +1,8 @@
 package ru.cft.focusstart.task3.renderers;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import ru.cft.focusstart.task3.app.Application;
 import ru.cft.focusstart.task3.model.CellsAnalyzer;
 import ru.cft.focusstart.task3.controller.ViewNotifier;
 import ru.cft.focusstart.task3.model.Board;
@@ -10,6 +13,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ViewCellModifier {
+
+    private static final Logger log = LoggerFactory.getLogger(ViewCellModifier.class.getName());
+
     private final Board board;
     private final ViewNotifier viewNotifier;
 
@@ -38,7 +44,7 @@ public class ViewCellModifier {
         var iconCode = String.valueOf(minesAroundCellCount);
 
         if (!GameImageIconMap.isIconCodeValid(iconCode)) {
-//            log error - Не удалось получить иконку
+            log.error("Не удалось найти иконку с кодом {}.", iconCode);
             return;
         }
 

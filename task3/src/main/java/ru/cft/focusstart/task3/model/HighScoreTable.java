@@ -1,5 +1,9 @@
 package ru.cft.focusstart.task3.model;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import ru.cft.focusstart.task3.renderers.ViewCellModifier;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -8,6 +12,8 @@ import java.util.Optional;
 import java.util.Scanner;
 
 public class HighScoreTable {
+
+    private static final Logger log = LoggerFactory.getLogger(HighScoreTable.class.getName());
 
     private static final File HIGH_SCORE_FILE = new File("./highScore.txt");
     private static final int NOVICE_RESULT_INDEX = 0;
@@ -84,7 +90,7 @@ public class HighScoreTable {
                 resultOptional.ifPresent(this::addResultToHighScoreList);
             }
         } catch (IOException e) {
-            //log error не удалось открыть файл
+            log.error("Не удалось открыть файл по пути {}.", HIGH_SCORE_FILE.getPath());
         }
     }
 
@@ -144,7 +150,7 @@ public class HighScoreTable {
 
             fileOutputStream.write(results.toString().getBytes(StandardCharsets.UTF_8));
         } catch (IOException e) {
-            //log error не удалось открыть файл
+            log.error("Не удалось открыть файл по пути {}.", HIGH_SCORE_FILE.getPath());
         }
     }
 

@@ -1,5 +1,7 @@
 package ru.cft.focusstart.task3.model;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import ru.cft.focusstart.task3.app.Application;
 import ru.cft.focusstart.task3.controller.ViewNotifier;
 import ru.cft.focusstart.task3.renderers.ViewRenderer;
@@ -11,6 +13,8 @@ import java.util.Random;
 import java.util.Timer;
 
 public class MinesweeperManager {
+
+    private static final Logger log = LoggerFactory.getLogger(MinesweeperManager.class.getName());
 
     private final Board board;
     private final int rowNumber;
@@ -136,6 +140,8 @@ public class MinesweeperManager {
     }
 
     private void runTimer() {
+        log.info("Игровой таймер запущен..");
+
         var timer = new Timer();
         var minesweeperTimer = new MinesweeperTimer(this);
         timer.schedule(minesweeperTimer, 1000, 1000);
@@ -151,6 +157,8 @@ public class MinesweeperManager {
     }
 
     private void createGameEnd(int row, int column, boolean isWin) {
+        log.info("Игра окончена, открываем мины..");
+
         viewCellModifier.openMines(rowNumber, columnNumber, row, column);
 
         timer.cancel();
@@ -166,6 +174,8 @@ public class MinesweeperManager {
     }
 
     private void createVictory() {
+        log.info("Генерируем победу..");
+
         var currentResult = new Result("", gameType.name(), seconds);
 
         if (highScoreTable.isNewRecord(currentResult)) {
@@ -176,6 +186,8 @@ public class MinesweeperManager {
     }
 
     private void createLoss() {
+        log.info("Генерируем поражение..");
+
         viewNotifier.notifyViewsLoss();
     }
 
@@ -203,6 +215,7 @@ public class MinesweeperManager {
     }
 
     private void fillingBoardWithMines(final Board board, int mines) {
+        log.info("Заполняем игровое поле минами. Количество мин {}..", mines);
 
         var numberOfMinesSet = 0;
 
@@ -214,8 +227,9 @@ public class MinesweeperManager {
                 }
             }
         }
-
         shuffleBoard(board);
+
+        log.info("Игровое поле \"заминировано\".");
     }
 
     private void shuffleBoard(Board board) {
