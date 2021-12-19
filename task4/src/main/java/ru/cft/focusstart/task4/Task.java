@@ -1,6 +1,11 @@
 package ru.cft.focusstart.task4;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class Task {
+
+    private static final Logger log = LoggerFactory.getLogger(Task.class.getName());
 
     private final long number;
     private final int step;
@@ -11,9 +16,10 @@ public class Task {
         this.number = number;
         this.step = step;
         this.startIndex = startIndex;
+        log.info("Создан Task внутри потока {}", Thread.currentThread().getName());
     }
 
-    public void compute() {
+    public double compute() {
         long counter = startIndex;
 
         while (counter <= number) {
@@ -21,9 +27,9 @@ public class Task {
 
             counter += step;
         }
-    }
 
-    public double getResult() {
+        log.info("Промежуточный результат Task внутри потока {} равен {}.", Thread.currentThread().getName(), result);
+
         return result;
     }
 }
