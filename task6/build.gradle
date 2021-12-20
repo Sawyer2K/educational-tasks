@@ -9,6 +9,47 @@ repositories {
     mavenCentral()
 }
 
+task clientJar(type: Jar) {
+    baseName 'ClientMain'
+
+    manifest {
+        attributes 'Main-Class': 'ru.cft.focusstart.task6.client.ClientMain'
+        version '1.0'
+    }
+
+    from (sourceSets.main.output) {
+        include "ru/cft/focusstart/task6/client/**"
+        include "ru/cft/focusstart/task6/common/**"
+        include "log4j.properties"
+    }
+    from {
+        configurations.runtimeClasspath.filter { it.exists() }.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+}
+
+task serverJar(type: Jar) {
+    baseName 'ServerMain'
+
+    manifest {
+        attributes 'Main-Class': 'ru.cft.focusstart.task6.server.ServerMain'
+        version '1.0'
+    }
+
+    from sourceSets.main.output
+    from {
+        configurations.runtimeClasspath.filter { it.exists() }.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+    exclude "ru/cft/focusstart/task6/client/**"
+}
+
+artifacts {
+    archives clientJar
+    archives serverJar
+}
+jar {
+    actions = []
+}
+
 dependencies {
     implementation group: 'org.slf4j', name: 'slf4j-api', version: '1.7.30'
     implementation group: 'log4j', name: 'log4j', version: '1.2.17'
