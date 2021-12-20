@@ -33,6 +33,7 @@ public class ConsumerThread extends Thread {
                 consumer.consume(storage);
             } catch (InterruptedException e) {
                 log.warn("Поток {} был разбужен!", Thread.currentThread().getName());
+                Thread.currentThread().interrupt();
             }
         }
     }

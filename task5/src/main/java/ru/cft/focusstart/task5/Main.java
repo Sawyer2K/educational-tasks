@@ -25,19 +25,19 @@ public class Main {
     public static void main(String[] args) throws IOException {
         applicationParametersInit();
 
+        ArrayList<ProducerThread> producers = new ArrayList<>();
         log.info("Создан склад, размером {}", maxStorageSize);
 
-        log.info("Создан список потоков-производителей. Количество потоков-производителей {}", producerCount);
-        ArrayList<ProducerThread> producers = new ArrayList<>();
         for (var i = 1; i <= producerCount; i++) {
             producers.add(new ProducerThread(i, storage, maxStorageSize, producerTime));
         }
+        log.info("Создан список потоков-производителей. Количество потоков-производителей {}", producerCount);
 
-        log.info("Создан список потоков-потребителей. Количество потоков-потребителей {}", producerCount);
         ArrayList<ConsumerThread> consumers = new ArrayList<>();
         for (var i = 1; i <= consumerCount; i++) {
             consumers.add(new ConsumerThread(i, storage, consumerTime));
         }
+        log.info("Создан список потоков-потребителей. Количество потоков-потребителей {}", producerCount);
 
         for (var producer : producers) {
             producer.start();
@@ -49,15 +49,19 @@ public class Main {
     }
 
     public static void applicationParametersInit() throws IOException {
+        log.info("Началась инициализация параметров программы." + System.lineSeparator() +
+                "Значение параметров указывается в конфигурационном файле param.properties и должно быть положительным и не нулевым." + System.lineSeparator() +
+                "При указании невалидных значений, параметры будут проинициализированы значением по умолчанию, равным 1." + System.lineSeparator());
+
         try (InputStream fis = Main.class.getClassLoader().getResourceAsStream(PATH_TO_PROPERTIES)) {
             var properties = new Properties();
             properties.load(fis);
 
-            producerCount = Integer.parseInt(properties.getProperty("PRODUCER_COUNT"));
-            consumerCount = Integer.parseInt(properties.getProperty("CONSUMER_COUNT"));
-            producerTime = Integer.parseInt(properties.getProperty("PRODUCER_TIME"));
-            consumerTime = Integer.parseInt(properties.getProperty("CONSUMER_TIME"));
-            maxStorageSize = Integer.parseInt(properties.getProperty("STORAGE_SIZE"));
+            producerCount = Math.max(1, Integer.parseInt(properties.getProperty("PRODUCER_COUNT")));
+            consumerCount = Math.max(1, Integer.parseInt(properties.getProperty("CONSUMER_COUNT")));
+            producerTime = Math.max(1, Integer.parseInt(properties.getProperty("PRODUCER_TIME")));
+            consumerTime = Math.max(1, Integer.parseInt(properties.getProperty("CONSUMER_TIME")));
+            maxStorageSize = Math.max(1, Integer.parseInt(properties.getProperty("STORAGE_SIZE")));
         } catch (FileNotFoundException e) {
             log.error("Не найден файл params.properties!" + System.lineSeparator() +
                     "Данный файл должен находиться в папке src/main/resource." + System.lineSeparator() +
@@ -67,7 +71,8 @@ public class Main {
                     "CONSUMER_COUNT = 3" + System.lineSeparator() +
                     "PRODUCER_TIME = 5" + System.lineSeparator() +
                     "CONSUMER_TIME = 3" + System.lineSeparator() +
-                    "STORAGE_SIZE = 10");
+                    "STORAGE_SIZE = 10" + System.lineSeparator() +
+                    "При указании отрицательного либо нулевого значения, параметру будет установлено значение по умолчанию равное 1.");
         }
     }
 }

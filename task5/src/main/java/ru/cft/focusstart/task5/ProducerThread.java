@@ -35,6 +35,7 @@ public class ProducerThread extends Thread {
                 producer.produce(storage, maxStorageSize);
             } catch (InterruptedException e) {
                 log.warn("Поток {} был разбужен!", Thread.currentThread().getName());
+                Thread.currentThread().interrupt();
             }
         }
     }
