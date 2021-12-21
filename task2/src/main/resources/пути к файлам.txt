@@ -1,4 +1,0 @@
--file
-C:\Users\soier\IdeaProjects\2021_02_sbitnev\task2\src\main\resources\circleInput5.txt
--out
-C:\Users\soier\IdeaProjects\2021_02_sbitnev\task2\src\main\resources\circleOutput5.txt
