@@ -1,0 +1,65 @@
+plugins {
+    id 'java'
+}
+
+group 'org.example'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+task clientJar(type: Jar) {
+    baseName 'ClientMain'
+
+    manifest {
+        attributes 'Main-Class': 'ru.cft.focusstart.task6.client.ClientMain'
+        version '1.0'
+    }
+
+    from (sourceSets.main.output) {
+        include "ru/cft/focusstart/task6/client/**"
+        include "ru/cft/focusstart/task6/common/**"
+        include "log4j.properties"
+    }
+    from {
+        configurations.runtimeClasspath.filter { it.exists() }.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+}
+
+task serverJar(type: Jar) {
+    baseName 'ServerMain'
+
+    manifest {
+        attributes 'Main-Class': 'ru.cft.focusstart.task6.server.ServerMain'
+        version '1.0'
+    }
+
+    from sourceSets.main.output
+    from {
+        configurations.runtimeClasspath.filter { it.exists() }.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+    exclude "ru/cft/focusstart/task6/client/**"
+}
+
+artifacts {
+    archives clientJar
+    archives serverJar
+}
+jar {
+    actions = []
+}
+
+dependencies {
+    implementation group: 'org.slf4j', name: 'slf4j-api', version: '1.7.30'
+    implementation group: 'log4j', name: 'log4j', version: '1.2.17'
+    implementation group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.14.1'
+    implementation 'org.slf4j:slf4j-log4j12:1.7.29'
+
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
+}
+
+test {
+    useJUnitPlatform()
+}
