@@ -31,9 +31,9 @@ public class MinesweeperManager {
     private Timer timer;
 
     public MinesweeperManager(GameType gameType) {
-        this.rowNumber = getRowNumberByGameType(gameType);
-        this.columnNumber = getColumnNumberByGameType(gameType);
-        this.totalMines = getMinesCountByGameType(gameType);
+        this.rowNumber = GameParametersIdentifier.getRowCountByGameType(gameType);
+        this.columnNumber = GameParametersIdentifier.getColumnCountByGameType(gameType);
+        this.totalMines = GameParametersIdentifier.getMinesCountByGameType(gameType);
         totalCells = rowNumber * columnNumber;
 
         board = new Board(rowNumber, columnNumber, totalMines);
@@ -189,29 +189,6 @@ public class MinesweeperManager {
         log.info("Генерируем поражение..");
 
         viewNotifier.notifyViewsLoss();
-    }
-
-    private int getRowNumberByGameType(GameType gameType) {
-        return switch (gameType) {
-            case NOVICE -> 9;
-            case MEDIUM, EXPERT -> 16;
-        };
-    }
-
-    private int getColumnNumberByGameType(GameType gameType) {
-        return switch (gameType) {
-            case NOVICE -> 9;
-            case MEDIUM -> 16;
-            case EXPERT -> 30;
-        };
-    }
-
-    private int getMinesCountByGameType(GameType gameType) {
-        return switch (gameType) {
-            case NOVICE -> 10;
-            case MEDIUM -> 40;
-            case EXPERT -> 99;
-        };
     }
 
     private void fillingBoardWithMines(final Board board, int mines) {
